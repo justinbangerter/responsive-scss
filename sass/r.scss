@@ -25,16 +25,35 @@ $bg-color: #EEE;
     border-left: 1px solid $color1;
 }
 
+@mixin solid-border($color, $width:1px){
+    border: solid $width $color;
+}
+
+@function white($alpha:1) {
+    @return rgba(255,255,255,$alpha);
+}
+
+@function black($alpha:1){
+    @return rgba(0,0,0,$alpha);
+}
+
+%dark-text {
+    color: #444;
+}
+%light-text {
+    color: #777;
+}
+
 %full-bottom { margin-bottom: 20px; }
 
 /* #Basic Styles
  ================================================== */
 body {
-    background: #fff;
+    background: white(1);
     font: 14px/21px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #444;
     -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
     -webkit-text-size-adjust: 100%;
+    @extend %dark-text;
 }
 
 
@@ -52,18 +71,19 @@ h3 { font-size: 28px; line-height: 34px; margin-bottom: 8px; }
 h4 { font-size: 21px; line-height: 30px; margin-bottom: 4px; }
 h5 { font-size: 17px; line-height: 24px; }
 h6 { font-size: 14px; line-height: 21px; }
-.subheader { color: #777; }
 
-p { margin: 0 0 20px 0; }
+.subheader { @extend %light-text }
+
+p { margin: 0; @extend %full-bottom }
 p img { margin: 0; }
-p.lead { font-size: 21px; line-height: 27px; color: #777; }
+p.lead { font-size: 21px; line-height: 27px; @extend %light-text }
 
 em { font-style: italic; }
 strong { font-weight: bold; color: #333; }
 small { font-size: 80%; }
 
-/*        Blockquotes */
-blockquote, blockquote p { font-size: 17px; line-height: 24px; color: #777; font-style: italic; }
+/* Blockquotes */
+blockquote, blockquote p { font-size: 17px; line-height: 24px; font-style: italic; @extend %light-text;}
 blockquote { margin: 0 0 20px; padding: 9px 20px 0 19px; border-left: 1px solid #ddd; }
 blockquote cite { display: block; font-size: 12px; color: #555; }
 blockquote cite:before { content: "\2014 \0020"; }
@@ -99,10 +119,7 @@ li p { line-height: 21px; }
 /* #Images
  ================================================== */
 
-img {
-    max-width: 100%;
-    height: auto; 
-}
+img { max-width: 100%; height: auto; }
 
 
 /* #Buttons
@@ -113,16 +130,16 @@ input[type="submit"],
 input[type="reset"],
 input[type="button"] {
     @extend %full-bottom;
-    color: #444;
+    @extend %dark-text;
     background: $bg-color;
-    @include background-image($bg-color, linear-gradient(top, rgba(255,255,255,.2) 0%, rgba(0,0,0,.2) 100%));
+    @include background-image($bg-color, linear-gradient(top, white(.2) 0%, black(.2) 100%));
     @include box-emboss(#ccc, #aaa);
     @include border-radius(3px);
     display: inline-block;
     font-size: 11px;
     font-weight: bold;
     text-decoration: none;
-    text-shadow: 0 1px rgba(255, 255, 255, .75);
+    text-shadow: 0 1px white(.75);
     cursor: pointer;
     line-height: normal;
     padding: 8px 10px;
@@ -131,14 +148,14 @@ input[type="button"] {
     &:hover {
         color: #222;
         background: #DDD;
-        @include background-image(#DDD, linear-gradient(top, rgba(255,255,255,.3) 0%, rgba(0,0,0,.3) 100%));
+        @include background-image(#DDD, linear-gradient(top, white(.3) 0%, black(.3) 100%));
         @include box-emboss(#aaa, #888);
     }
 
     &:active {
         background: #ccc;
-        @include background-image(#ccc, linear-gradient(top, rgba(255,255,255,.35) 0%, rgba(0,0,0,.4) 100%));
-        border: 1px solid #666;
+        @include background-image(#ccc, linear-gradient(top, white(.35) 0%, black(.4) 100%));
+        @include solid-border(#666);
     }
 
     &.full-width {
@@ -164,8 +181,8 @@ form, fieldset { @extend %full-bottom; }
 
 %textfield {
     @extend %full-bottom;
-    border: 1px solid #ccc;
-    color: #777;
+    @extend %light-text;
+    @include solid-border(#ccc);
     background: #fff; 
     @include border-radius(2px);
     padding: 6px 4px;
@@ -184,8 +201,8 @@ textarea {
     @extend %textfield;
 
     &:focus {
-        border: 1px solid #aaa;
-        color: #444;
+        @extend %dark-text;
+        @include solid-border(#aaa);
         @include box-shadow(0, 0, 3px, rgba(0,0,0,.2));
     }
 }
@@ -205,15 +222,13 @@ legend {
     font-size: 13px; 
 
     & span {
+        @extend %dark-text;
         font-weight: normal;
         font-size: 13px;
-        color: #444; 
     }
 }
 
-input[type="checkbox"] {
-    display: inline; 
-}
+input[type="checkbox"] { display: inline; }
 
 /* #Misc
  ================================================== */
