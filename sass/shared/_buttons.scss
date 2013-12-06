@@ -1,3 +1,5 @@
+@import "compass/css3/images";
+
 /* #Buttons
  ================================================== */
 .btn,
@@ -8,7 +10,7 @@ input[type="button"] {
   @extend %full-bottom;
   @extend %dark-text;
   background: $bg-color;
-  @include background-image($bg-color, linear-gradient(top, white(.2) 0%, black(.2) 100%));
+  @include background-image(linear-gradient(top, white(.2) 0%, black(.2) 100%));
   @include box-emboss(#ccc, #aaa);
   @include border-radius(3px);
   display: inline-block;
@@ -24,13 +26,13 @@ input[type="button"] {
   &:hover {
     color: #222;
     background: #DDD;
-    @include background-image(#DDD, linear-gradient(top, white(.3) 0%, black(.3) 100%));
+    @include background-image(linear-gradient(top, white(.3) 0%, black(.3) 100%));
     @include box-emboss(#aaa, #888);
   }
 
   &:active {
     background: #ccc;
-    @include background-image(#ccc, linear-gradient(top, white(.35) 0%, black(.4) 100%));
+    @include background-image(linear-gradient(top, white(.35) 0%, black(.4) 100%));
     @include border(#666);
   }
 
