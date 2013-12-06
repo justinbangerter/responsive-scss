@@ -1,0 +1,191 @@
+/* Base 960 Grid */
+
+/************
+ * Settings *
+ ************/
+
+//Gutter width
+$gutter-width: 10px;
+
+//Stop using gutters at this width
+$gutter-threshold: 300px;
+
+//Number of columns to use
+$number-of-columns: 12;
+
+
+
+/*********
+ * Logic *
+ *********/
+
+/**
+ * Determine what size gutter to use
+ *
+ * @param $width the width of the container
+ */
+@function gutter($width){
+    @if $width > $gutter-threshold {
+        @return $gutter-width
+    }
+    @else {
+        @return 0px
+    }
+}
+
+/**
+ * Determine what the column width to use
+ *
+ * @param $count the number of columns
+ * @param $width the width of the container
+ */
+@function interval($count, $width){
+    @return $width/$count;
+}
+
+/**
+ * Nest a class called offset1 if $i is 1
+ * This class offsets an element within a container
+ *
+ * @param $i how many columns wide is the offset
+ * @param $count the number of columns
+ * @param $width the width of the container
+ */
+@mixin offset($i, $count, $width) {
+    .offset#{$i} { padding-left: interval($count, $width) * $i; }
+}
+
+/**
+ * Nest a class called col1 if $i is 1
+ * This class controls the width of an element
+ *
+ * @param $i how many columns wide is the element
+ * @param $count how many columns there are
+ * @param $width the width of the container
+ */
+@mixin col($i, $count, $width) {
+    .col#{$i} {
+      @extend %col#{$width};
+      width: interval($count, $width) * $i - 2 * gutter($width);
+    }
+}
+
+/**
+ * Create a bunch of columns and offsets
+ *
+ * @param $count the number of columns to use
+ * @param $width the width of the container
+ */
+@mixin cols($count, $width) {
+
+
+    @for $i from 1 through $count {
+        @include col($i, $count, $width);
+        @include offset($i, $count, $width);
+    }
+}
+
+/**
+ * Make a column that has a ratio width of its container
+ *
+ * @param $i the index (example: 2 of 3)
+ * @param $of the width of this column is roughly $width/$of
+ * @param $width the width of the container
+ */
+@mixin col-ratio($i, $of, $width) {
+  .col#{$i}_#{$of} {
+    @extend %col#{$width};
+    width: $i * $width / $of - 2 * gutter($width);
+  }
+  .offset#{$i}_#{$of} {
+    padding-left: $i * $width / $of;
+  }
+}
+
+/**
+ * Make columns that are a ratio width of the container
+ *
+ * @param $of the number of portions
+ * @param $width the width of the container
+ */
+@mixin col-ratios($of, $width) {
+  @for $i from 1 through ($of - 1) {
+    @include col-ratio($i, $of, $width);
+  }
+}
+
+/**
+ * Create a standard layout for a target width
+ *
+ * @param $width the width of a container in this layout
+ */
+@mixin layout($width) {
+
+  %col#{$width} {
+    float: left;
+    display: inline;
+    margin-left: gutter($width);
+    margin-right: gutter($width); 
+  }
+
+  .container {
+    position: relative;
+    width: $width + 2 * ( $gutter-width - gutter($width) );
+    margin: 0 auto;
+    padding: 0;
+
+    @include col-ratios(2,$width);
+    @include col-ratios(3,$width);
+    @include cols($number-of-columns,$width);
+  }
+}
+
+/**
+ * Make all columns as wide as the screen, and remove offsets
+ * Good for smaller screens
+ * 
+ * @param $width the width of the screen
+ */
+@mixin hard-layout($width){
+  %col#{$width} {
+    margin: 0;
+    width: $width;
+    padding-left: 0;
+  }
+
+  .container {
+    width: $width;
+    @for $i from 1 through $number-of-columns {
+      .col#{$i} { @extend %col#{$width} }
+      .offset#{$i} { @extend %col#{$width} }
+    }
+  }
+}
+
+
+
+/***********
+ * Styling *
+ ***********/
+
+.row { margin-bottom: 20px;}
+
+@include layout(960px);
+
+/* #Tablet (Portrait) 768px
+ ================================================== */
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+  @include layout(768px);
+}
+
+/* #Mobile (Portrait) 320px
+ ================================================== */
+@media only screen and (max-width: 767px) {
+  @include hard-layout(300px);
+}
+
+/* #Mobile (Landscape) 480px
+ ================================================== */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  @include hard-layout(420px);
+}

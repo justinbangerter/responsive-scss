@@ -1,0 +1,78 @@
+@include "shared/colors"
+
+$image-scale: 1.2;
+$h1: 110px * $image-scale;
+$w1: 100px * $image-scale;
+
+.caption { 
+  opacity: 0;
+  @extend %dark-text;
+  margin: 5px;
+  border-top: solid 1px $red2;
+  position: absolute;
+  bottom: 0;
+  width: 2*$w1 - 10px;
+  transition: all 300ms ease-in-out;
+}
+
+.gallery {
+  margin-top: $h1/2 - 10px;
+  @extend .clearfix;
+
+
+  li {
+    @extend .float-left;
+    background-color: #FFF;
+    margin-right: $w1/8;
+    height: $h1;
+    width: $w1;
+    overflow: hidden;
+    position: relative;
+    display: table;
+
+    a {
+      @extend .text-center;
+      height: $h1;
+      width: $w1;
+      background-color: $bg-color;
+      position: absolute;
+      @include box-emboss($red1, $red2, 3px, double);
+      @include border-radius(5px);
+      transition: all 250ms ease-in;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    $m1: -$h1/2;
+    $m2: -3*$w1/8;
+    $m3: $m1 + 12px;
+    $m4: $m2;
+
+    &:hover {
+
+      a {
+        z-index: 1030;
+        margin-top: $m1;
+        margin-left: $m2;
+        margin-bottom: $m3;
+        margin-right: $m4;
+        height: 2*$h1;
+        width: 2*$w1; 
+        transform: scale(1);
+      }
+
+      .caption{ 
+        opacity: 1;
+      }
+    }
+  }
+
+  img {
+    max-width: 90%;
+    max-height: 90%;
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    margin: auto;
+  }
+}
+

@@ -1,0 +1,35 @@
+@import "variables";
+@import "colors";
+@import "fonts";
+
+.remove-bottom { margin-bottom: 0 !important; }
+.half-bottom { margin-bottom: 10px !important; }
+.full-bottom { margin-bottom: 20px !important; }
+%full-bottom { margin-bottom: 20px; }
+
+.float-left { float: left; }
+.float-right { float: right; }
+.text-center { text-align: center; }
+
+/**
+ * Embosses a box
+ * @color1 used for top-left border color
+ * @color2 used for bottom-right border color
+ */
+@mixin box-emboss($color1, $color2, $width:1px, $type:solid) {
+    border: $width $type $color2;
+    border-top: $width $type $color1;
+    border-left: $width $type $color1;
+}
+
+@mixin border($color, $width:1px, $type:solid){
+    border: $type $width $color;
+}
+
+@function white($alpha:1) {
+    @return rgba(255,255,255,$alpha);
+}
+
+@function black($alpha:1){
+    @return rgba(0,0,0,$alpha);
+}

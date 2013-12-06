@@ -1,0 +1,50 @@
+/* #Buttons
+ ================================================== */
+.btn,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  @extend %full-bottom;
+  @extend %dark-text;
+  background: $bg-color;
+  @include background-image($bg-color, linear-gradient(top, white(.2) 0%, black(.2) 100%));
+  @include box-emboss(#ccc, #aaa);
+  @include border-radius(3px);
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 0 1px white(.75);
+  cursor: pointer;
+  line-height: normal;
+  padding: 8px 10px;
+  font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  &:hover {
+    color: #222;
+    background: #DDD;
+    @include background-image(#DDD, linear-gradient(top, white(.3) 0%, black(.3) 100%));
+    @include box-emboss(#aaa, #888);
+  }
+
+  &:active {
+    background: #ccc;
+    @include background-image(#ccc, linear-gradient(top, white(.35) 0%, black(.4) 100%));
+    @include border(#666);
+  }
+
+  &.full-width {
+    width: 100%;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    text-align: center;
+  }
+}
+
+/* Fix for odd Mozilla border & padding issues */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}

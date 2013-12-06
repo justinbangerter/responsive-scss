@@ -1,0 +1,12 @@
+$bg-color: #EEE;
+
+
+$red1: #B55;
+$red2: darken($red1, 20%);
+
+
+$link-color: $red2;
+$link-visited-color: $link-color;
+
+%dark-text { color: #333; }
+%light-text { color: #777; }

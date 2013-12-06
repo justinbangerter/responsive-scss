@@ -1,0 +1,40 @@
+%clear {
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  height: 0;
+}
+
+%clear-both { clear: both; }
+%no-width { width: 0; }
+%content-space { content: "\0020"; }
+
+.container:after {
+  @extend %content-space;
+  @extend %clear-both;
+  @extend %clear;
+}
+
+/* Use clearfix class on parent to clear nested columns, or wrap each row of columns in a <div class="row"> */
+.clearfix {
+  zoom: 1;
+
+  &:before, &:after {
+    @extend %content-space;
+    @extend %no-width;
+    @extend %clear;
+  }
+
+  &:after {
+    @extend %clear-both;
+  }
+}
+
+.row { @extend .clearfix }
+
+/* You can also use a <br class="clear" /> to clear columns */
+.clear {
+  @extend %clear;
+  @extend %clear-both;
+  @extend %no-width;
+}

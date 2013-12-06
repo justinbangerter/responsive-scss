@@ -1,0 +1,35 @@
+@include "shared/common"
+
+//// Navigation Bar
+.nav {
+
+  @extend .clearfix;
+  & > * {
+    border-bottom: double 3px $red1; 
+  }
+
+  a { @extend %dark-text; }
+
+  ul { padding-left: 10px; }
+
+  li {
+    @extend .float-left;
+    padding-right: 18px;
+    font-size: 20px;
+
+    &.active {
+      font-size: 28px;
+      color: $red1;
+    }
+  }
+}
+.fixed-top {
+  background: $bg-color;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  //Pad the element that comes after the nav bar
+  & + * { padding-top: 70px; }
+}
+
